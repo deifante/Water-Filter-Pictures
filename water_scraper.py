@@ -11,8 +11,8 @@ import os
 import csv
 import urllib
 
-__author__ = "Deifante Jay Walters"
-__version__ = "0.0.1"
+__author__  = "Deifante Jay Walters"
+__version__ = "0.0.2"
 
 class WaterScraper(object):
     """Will read the csv, create directories and place the appropriate images in them."""

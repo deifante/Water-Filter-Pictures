@@ -15,7 +15,6 @@ Water Filter Pictures provides 2 small python classes. The main functionality is
 ### *nix (Linux, Apple, Unix etc.)
 1. Download project from the [Downloads page](https://github.com/deifante/Water-Filter-Pictures/downloads).
 2. Unpack appropriate archive file.
-2. run the following at the command line.
-> python water_interface.py
+3. > python water_interface.py
 
 **Note:** The application will appear to be "Not Responding". On Windows the title bar will reflect this as well. To confirm the application is still working, you can go to the folder specified in "Destination" and watch the folders and jpgs being created.

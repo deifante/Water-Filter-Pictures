@@ -9,7 +9,7 @@ from Tkinter import *
 from water_scraper import WaterScraper
 
 __author__  = "Deifante Jay Walters"
-__version__ = "0.0.1"
+__version__ = "0.1.0"
 
 class WaterInterface(object):
 

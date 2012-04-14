@@ -5,7 +5,7 @@ Water Filter Pictures provides 2 small Python classes. The main functionality is
 
 ## Usage
 ### Windows (without Python interpreter installed)
-1. Unpack the archive for your [Water-Filter-Pictures-bin-win32-0.1.zip](https://github.com/downloads/deifante/Water-Filter-Pictures/Water-Filter-Pictures-bin-win32-0.1.zip).
+1. Unpack the archive for your [Water-Filter-Pictures-bin-win32-0.2.zip](https://github.com/downloads/deifante/Water-Filter-Pictures/Water-Filter-Pictures-bin-win32-0.2.zip).
 2. Double click the file named water_interface.exe
 3. Provide the the full or relative path to the source csv in the top input box labeled "Source".
 4. Provide the full or relative path to the folder where you'd like the images to be placed in the input box labeled "Destination".

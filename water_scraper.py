@@ -25,10 +25,13 @@ class WaterScraper(object):
         try:
             water_reader = csv.reader(open(self.__csv_file_name, 'rb'))
         except IOError as e:
-            # Error reading file
             return
+
         column_names = water_reader.next()
-        dump_dir = os.path.join(os.getcwd(), self.__destination_folder)
+        if os.path.isabs(self.__destination_folder):
+            dump_dir = self.__destination_folder
+        else:
+            dump_dir = os.path.join(os.getcwd(), self.__destination_folder)
 
         created_directories = {}
         for row in water_reader:

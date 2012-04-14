@@ -21,7 +21,7 @@ class WaterScraper(object):
         self.__csv_file_name = file_name
         self.__destination_folder = dest_folder
 
-    def scrape(self):
+    def scrape(self, status_callback = None):
         try:
             water_reader = csv.reader(open(self.__csv_file_name, 'rb'))
         except IOError as e:
@@ -52,6 +52,10 @@ class WaterScraper(object):
 
             new_filename = "{0}.{1}".format(row[1], extension)
             urllib.urlretrieve(row[2], os.path.join(created_directories[row[0]],new_filename))
+            if status_callback:
+                status_string = 'Read line {0}, filter #{1}'.format(water_reader.line_num, row[1])
+                status_callback(status_string)
+            
 
 if __name__ == "__main__":
     scraper = WaterScraper('samples/sample.csv')

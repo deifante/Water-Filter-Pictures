@@ -4,6 +4,7 @@
 """
 water_interface is gui front end for water_scraper.
 """
+import os
 from Tkinter import *
 
 from water_scraper import WaterScraper
@@ -36,11 +37,11 @@ class WaterInterface(object):
         for child in frame.winfo_children():
             child.grid_configure()
 
-    def go(self):
+    def go(self, event = None):
         source = self.__source.get().strip()
         dest = self.__dest.get().strip()
 
-        if len(source) > 0 and len(dest) > 0:
+        if len(source) > 0 and len(dest) > 0 and os.path.isfile(source):
             scraper = WaterScraper(source, dest)
             self.update_title('Working...')
             scraper.scrape()

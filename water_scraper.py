@@ -22,7 +22,11 @@ class WaterScraper(object):
         self.__destination_folder = dest_folder
 
     def scrape(self):
+        # try:
         water_reader = csv.reader(open(self.__csv_file_name, 'rb'))
+        # except IOError as e:
+        #     # Error reading file
+        #     return
         column_names = water_reader.next()
         dump_dir = os.path.join(os.getcwd(), self.__destination_folder)
 

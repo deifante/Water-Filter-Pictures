@@ -12,7 +12,7 @@ import csv
 import urllib
 
 __author__  = "Deifante Jay Walters"
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 class WaterScraper(object):
     """Will read the csv, create directories and place the appropriate images in them."""
@@ -26,6 +26,10 @@ class WaterScraper(object):
             water_reader = csv.reader(open(self.__csv_file_name, 'rb'))
         except IOError as e:
             return
+
+        if status_callback:
+            status_callback('Beginning work on reading {0} into {1}'.format
+                            (self.__csv_file_name, self.__destination_folder))
 
         column_names = water_reader.next()
         if os.path.isabs(self.__destination_folder):
@@ -55,7 +59,9 @@ class WaterScraper(object):
             if status_callback:
                 status_string = 'Read line {0}, filter #{1}'.format(water_reader.line_num, row[1])
                 status_callback(status_string)
-            
+
+        if status_callback:
+            status_callback('Done!')
 
 if __name__ == "__main__":
     scraper = WaterScraper('samples/sample.csv')

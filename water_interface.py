@@ -10,21 +10,35 @@ from Tkinter import *
 
 from water_scraper import WaterScraper
 
-__author__  = "Deifante Jay Walters"
-__version__ = "0.2.0"
-
 class WaterThread(threading.Thread):
+    """Created to allow GUI responsiveness while running the download.
+
+    WaterThread will run a water_scraper operation in it's own thread to allow
+    the  WaterInterface GUI to be responsive while the operation is taking place.
+    """
     def __init__(self, water_interface):
-        self.__water_interface = water_interface
+        """Intitalise the object with an instance of WaterInterface.
+
+        When it is time to run, we'll pass the parameters from the WaterInterface
+        to an instance of WaterScraper."""
+        self._water_interface = water_interface
         threading.Thread.__init__(self)
 
     def run(self):
-        scraper = WaterScraper(self.__water_interface.source, self.__water_interface.dest)
-        scraper.scrape(self.__water_interface.status_callback)
+        """Use the current data in our instance of WaterInterface to make
+        an instance of a WaterScraper and let it run it's downloads.
+        """
+        scraper = WaterScraper(self._water_interface.source, self._water_interface.dest)
+        scraper.scrape(self._water_interface.status_callback)
 
 class WaterInterface(object):
-
+    """A GUI interface for WaterScraper."""
     def __init__(self, master):
+        """Start an instance of WaterInterface
+
+        Keword arguments:
+        master -- A reference to an instance of Tk().
+        """
         frame = Frame(master)
         self.__master = master
         master.resizable(FALSE,FALSE)
@@ -53,6 +67,12 @@ class WaterInterface(object):
             child.grid_configure()
 
     def go(self, event = None):
+        """Start the downloading operation.
+
+        Also does a little checking of the input parameters.
+        Keyword arguments:
+        event -- Passed via Tkinter. Not used.
+        """
         source = self.__source.get().strip()
         dest = self.__dest.get().strip()
 
@@ -68,15 +88,12 @@ class WaterInterface(object):
         water_thread = WaterThread(self)
         water_thread.start()
 
-    def update_title(self, new_title):
-        if not new_title.startswith("Steve's Water App"):
-            new_title = "Steve's Water App - {0}".format(new_title)
-        self.__master.title(new_title)
-
-    def status_update_callback(self, new_status):
-        self.log(new_status)
-
     def log(self, data):
+        """Simply posts the data to the long window.
+
+        Keyword arguments:
+        data -- Expect this to be a string. Logged to the log text box.
+        """
         self.__logging_window.config(state=NORMAL)
         self.__logging_window.insert(END, data + '\n')
         self.__logging_window.config(state=DISABLED)
@@ -90,8 +107,9 @@ class WaterInterface(object):
     dest = property(get_dest)
 
     def get_status_callback(self):
-        return self.status_update_callback
+        return self.log
     status_callback = property(get_status_callback)
+
 
 if __name__ == "__main__":
     root = Tk()

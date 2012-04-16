@@ -11,31 +11,28 @@ import os
 import csv
 import urllib
 
-__author__  = "Deifante Jay Walters"
-__version__ = "0.2.0"
-
 class WaterScraper(object):
     """Will read the csv, create directories and place the appropriate images in them."""
 
     def __init__(self, file_name, dest_folder = 'dumps'):
-        self.__csv_file_name = file_name
-        self.__destination_folder = dest_folder
+        self._csv_file_name = file_name
+        self._destination_folder = dest_folder
 
     def scrape(self, status_callback = None):
         try:
-            water_reader = csv.reader(open(self.__csv_file_name, 'rb'))
+            water_reader = csv.reader(open(self._csv_file_name, 'rb'))
         except IOError as e:
             return
 
-        if status_callback:
+        if status_callback is not None:
             status_callback('Beginning work on reading {0} into {1}'.format
-                            (self.__csv_file_name, self.__destination_folder))
+                            (self._csv_file_name, self._destination_folder))
 
         column_names = water_reader.next()
-        if os.path.isabs(self.__destination_folder):
-            dump_dir = self.__destination_folder
+        if os.path.isabs(self._destination_folder):
+            dump_dir = self._destination_folder
         else:
-            dump_dir = os.path.join(os.getcwd(), self.__destination_folder)
+            dump_dir = os.path.join(os.getcwd(), self._destination_folder)
 
         created_directories = {}
         for row in water_reader:
@@ -56,12 +53,13 @@ class WaterScraper(object):
 
             new_filename = "{0}.{1}".format(row[1], extension)
             urllib.urlretrieve(row[2], os.path.join(created_directories[row[0]],new_filename))
-            if status_callback:
+            if status_callback is not None:
                 status_string = 'Read line {0}, filter #{1}'.format(water_reader.line_num, row[1])
                 status_callback(status_string)
 
-        if status_callback:
+        if status_callback is not None:
             status_callback('Done!')
+
 
 if __name__ == "__main__":
     scraper = WaterScraper('samples/sample.csv')
